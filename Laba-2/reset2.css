@@ -9,10 +9,6 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
-ul, ol {
-  list-style: none;
-}
-
 a {
   text-decoration: none;
   color: inherit;
