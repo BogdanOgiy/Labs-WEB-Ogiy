@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle}">Animal Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="catalog-body">
+<div id="animalFormApp"
+     class="container page-shell"
+     th:attr="data-api-base=${apiBase},data-form-mode=${formMode},data-item-id=${itemId}">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 form-card">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="h3 mb-0 form-title" th:text="${pageTitle}">Animal Form</h1>
+                        <a class="btn btn-back" th:href="@{/items}">Back</a>
+                    </div>
+
+                    <div id="loadingBox" class="message-box mb-4 d-none">
+                        Loading animal data...
+                    </div>
+
+                    <div id="formError" class="message-box message-box-danger mb-4 d-none"></div>
+
+                    <form id="animalForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input id="name" name="name" type="text" class="form-control" placeholder="Amur Leopard" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="scientificName" class="form-label">Scientific Name</label>
+                            <input id="scientificName" name="scientificName" type="text" class="form-control" placeholder="Panthera pardus orientalis">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" name="description" class="form-control" rows="4" placeholder="Short facts about habitat and status..."></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="populationLeft" class="form-label">Population Left</label>
+                            <input id="populationLeft" name="populationLeft" type="number" min="0" class="form-control">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="imageUrl" class="form-label">Image URL</label>
+                            <input id="imageUrl" name="imageUrl" type="text" class="form-control" placeholder="https://example.com/animal.jpg">
+                            <div class="url-preview mt-2">
+                                <div class="preview-label">Image preview</div>
+                                <div id="previewHint" class="preview-hint">Paste URL to see photo preview.</div>
+                            </div>
+                            <img id="imagePreview"
+                                 class="image-preview mt-3 w-100 d-none"
+                                 alt="Animal image preview">
+                        </div>
+
+                        <button id="submitButton" type="submit" class="btn btn-theme">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/animal-form.js}"></script>
+</body>
+</html>
+
+

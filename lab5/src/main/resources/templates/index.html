@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Animal Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="mb-1">Rare Animals</h1>
+        </div>
+        <a class="btn btn-primary" th:href="@{/items/new}">Add animal</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Scientific Name</th>
+                        <th>Population</th>
+                        <th>Image URL</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(items)}">
+                        <td colspan="6" class="text-center py-4 text-secondary">No animals found.</td>
+                    </tr>
+                    <tr th:each="item : ${items}">
+                        <td th:text="${item.id}">1</td>
+                        <td th:text="${item.name}">Animal name</td>
+                        <td th:text="${item.scientificName}">Scientific name</td>
+                        <td th:text="${item.populationLeft}">0</td>
+                        <td class="text-truncate" style="max-width: 240px;" th:text="${item.imageUrl}">https://...</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-secondary me-2" th:href="@{/items/{id}/edit(id=${item.id})}">Edit</a>
+                            <form class="d-inline" th:action="@{/items/{id}/delete(id=${item.id})}" method="post">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Error</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --night-950: #0b1116;
+            --night-900: #111b23;
+            --night-800: #182834;
+            --leaf-300: #79bb8f;
+            --text-100: #edf3f7;
+            --text-300: #b8c6d1;
+            --danger-soft: #d36a6a;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #1f3645 0%, var(--night-950) 45%, #090d12 100%);
+            color: var(--text-100);
+        }
+
+        .error-card {
+            background: linear-gradient(160deg, rgba(24, 40, 52, 0.92), rgba(17, 27, 35, 0.94));
+            border: 1px solid rgba(121, 187, 143, 0.2);
+            border-radius: 1rem;
+        }
+
+        .error-title {
+            color: var(--danger-soft);
+            font-weight: 700;
+        }
+
+        .btn-theme {
+            background-color: var(--leaf-300);
+            border-color: var(--leaf-300);
+            color: #0d1a22;
+            font-weight: 600;
+        }
+
+        .btn-theme:hover {
+            background-color: #8fcea3;
+            border-color: #8fcea3;
+            color: #0d1a22;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-sm error-card">
+                <div class="card-body p-4 p-md-5 text-center">
+                    <h1 class="h3 error-title mb-3">Something went wrong</h1>
+                    <p class="mb-4" style="color: var(--text-300);" th:text="${message}">Unexpected error.</p>
+                    <a class="btn btn-theme" th:href="@{/items}">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

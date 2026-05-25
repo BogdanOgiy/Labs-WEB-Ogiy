@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle}">Animal Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="h3 mb-0" th:text="${pageTitle}">Animal Form</h1>
+                        <a class="btn btn-outline-secondary" th:href="@{/items}">Back</a>
+                    </div>
+
+                    <form th:action="@{${formAction}}" th:object="${item}" method="post">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input id="name" type="text" class="form-control" th:field="*{name}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="scientificName" class="form-label">Scientific Name</label>
+                            <input id="scientificName" type="text" class="form-control" th:field="*{scientificName}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" class="form-control" rows="4" th:field="*{description}"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="populationLeft" class="form-label">Population Left</label>
+                            <input id="populationLeft" type="number" min="0" class="form-control" th:field="*{populationLeft}">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="imageUrl" class="form-label">Image URL</label>
+                            <input id="imageUrl" type="text" class="form-control" th:field="*{imageUrl}">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

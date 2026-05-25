@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rare Animals Catalog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --night-950: #0b1116;
+            --night-900: #111b23;
+            --night-800: #182834;
+            --night-700: #224052;
+            --leaf-400: #5ca374;
+            --leaf-300: #79bb8f;
+            --sand-300: #d2b27c;
+            --text-100: #edf3f7;
+            --text-300: #b8c6d1;
+            --danger-400: #d36a6a;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #1f3645 0%, var(--night-950) 45%, #090d12 100%);
+            color: var(--text-100);
+        }
+
+        .hero {
+            background: linear-gradient(120deg, rgba(24, 40, 52, 0.9), rgba(17, 27, 35, 0.92));
+            border: 1px solid rgba(121, 187, 143, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .page-title {
+            color: var(--text-100);
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            color: var(--text-300);
+        }
+
+        .btn-theme {
+            background-color: var(--leaf-400);
+            border-color: var(--leaf-400);
+            color: #0d1a22;
+            font-weight: 600;
+        }
+
+        .btn-theme:hover {
+            background-color: var(--leaf-300);
+            border-color: var(--leaf-300);
+            color: #0d1a22;
+        }
+
+        .animal-card {
+            background: linear-gradient(160deg, rgba(34, 64, 82, 0.5), rgba(17, 27, 35, 0.75));
+            border: 1px solid rgba(121, 187, 143, 0.14);
+            border-radius: 0.9rem;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+        }
+
+        .animal-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            background: var(--night-800);
+        }
+
+        .animal-image-placeholder {
+            width: 100%;
+            height: 240px;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(121, 187, 143, 0.12),
+                rgba(121, 187, 143, 0.12) 12px,
+                rgba(210, 178, 124, 0.12) 12px,
+                rgba(210, 178, 124, 0.12) 24px
+            );
+            color: var(--text-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+        }
+
+        .animal-meta {
+            color: var(--text-300);
+            font-size: 0.92rem;
+        }
+
+        .animal-description {
+            color: var(--text-300);
+            min-height: 3.5rem;
+        }
+
+        .chip {
+            background: rgba(92, 163, 116, 0.16);
+            border: 1px solid rgba(121, 187, 143, 0.22);
+            color: var(--leaf-300);
+            border-radius: 999px;
+            font-size: 0.78rem;
+            padding: 0.22rem 0.65rem;
+        }
+
+        .btn-edit {
+            border-color: rgba(121, 187, 143, 0.35);
+            color: var(--leaf-300);
+        }
+
+        .btn-edit:hover {
+            background: rgba(121, 187, 143, 0.12);
+            color: var(--text-100);
+            border-color: rgba(121, 187, 143, 0.55);
+        }
+
+        .btn-delete {
+            border-color: rgba(211, 106, 106, 0.5);
+            color: #f1b0b0;
+        }
+
+        .btn-delete:hover {
+            background: rgba(211, 106, 106, 0.16);
+            color: #ffd6d6;
+            border-color: rgba(211, 106, 106, 0.7);
+        }
+    </style>
+</head>
+<body>
+<div class="container py-4 py-md-5">
+    <section class="hero mb-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div>
+                <h1 class="mb-2 page-title">Rare Animals Catalog</h1>
+                <p class="mb-0 page-subtitle">Interactive catalog with photos and editable animal profiles.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <span class="chip" th:text="'Total cards: ' + ${#lists.size(items)}">Total cards: 0</span>
+                <a class="btn btn-theme" th:href="@{/items/new}">Add animal card</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="text-center py-5 animal-card" th:if="${#lists.isEmpty(items)}">
+        <h2 class="h4 mb-2 page-title">No cards yet</h2>
+        <p class="animal-meta mb-3">Add your first rare animal to start the catalog.</p>
+        <a class="btn btn-theme" th:href="@{/items/new}">Create first card</a>
+    </div>
+
+    <div class="row g-4" th:if="${!#lists.isEmpty(items)}">
+        <div class="col-12 col-md-6 col-xl-4" th:each="item : ${items}">
+            <article class="animal-card h-100 d-flex flex-column">
+                <img class="animal-image"
+                     th:if="${item.imageUrl != null and !#strings.isEmpty(item.imageUrl)}"
+                     th:src="${item.imageUrl}"
+                     th:alt="${item.name}">
+                <div class="animal-image-placeholder"
+                     th:if="${item.imageUrl == null or #strings.isEmpty(item.imageUrl)}">
+                    Image not specified
+                </div>
+
+                <div class="p-3 p-lg-4 d-flex flex-column h-100">
+                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                        <h2 class="h4 mb-0 page-title" th:text="${item.name}">Animal name</h2>
+                        <span class="chip" th:text="'ID ' + ${item.id}">ID 1</span>
+                    </div>
+
+                    <p class="animal-meta mb-2"
+                       th:text="${#strings.isEmpty(item.scientificName) ? 'Scientific name not specified.' : item.scientificName}">
+                        Scientific name
+                    </p>
+                    <p class="animal-description mb-3"
+                       th:text="${#strings.isEmpty(item.description) ? 'Description not specified.' : item.description}">
+                        Description text
+                    </p>
+
+                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                        <span class="chip"
+                              th:text="'Population left: ' + ${(item.populationLeft == null) ? 0 : item.populationLeft}">
+                            Population left: 0
+                        </span>
+                        <div class="d-flex gap-2">
+                            <a class="btn btn-sm btn-edit" th:href="@{/items/{id}/edit(id=${item.id})}">Edit</a>
+                            <form th:action="@{/items/{id}/delete(id=${item.id})}" method="post">
+                                <button type="submit" class="btn btn-sm btn-delete">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+</body>
+</html>

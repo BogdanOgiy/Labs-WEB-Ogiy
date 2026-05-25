@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rare Animals Catalog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="catalog-body">
+<div id="catalogApp" class="container page-shell" th:attr="data-api-base=${apiBase}">
+    <section class="hero mb-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div>
+                <h1 class="mb-2 page-title">Rare Animals Catalog</h1>
+                <p class="mb-0 page-subtitle">JWT-protected Spring Boot REST API with responsive catalog cards.</p>
+            </div>
+            <div class="hero-actions">
+                <span id="totalCards" class="chip total-chip">Total cards: 0</span>
+                <a id="addCardLink" class="btn btn-theme" th:href="@{/items/new}">Add animal card</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="auth-panel mb-4">
+        <div class="auth-heading">
+            <div>
+                <h2 class="h5 mb-1 page-title">Account access</h2>
+                <p id="authStatus" class="mb-0 page-subtitle">Log in or register to load and edit catalog data.</p>
+            </div>
+            <button id="logoutButton" class="btn btn-back d-none" type="button">Log out</button>
+        </div>
+        <form id="authForm" class="auth-form mt-3">
+            <input id="authUsername" class="form-control" type="text" autocomplete="username" placeholder="Username" required>
+            <input id="authPassword" class="form-control" type="password" autocomplete="current-password" placeholder="Password" required>
+            <div class="auth-buttons">
+                <button class="btn btn-theme" type="submit" data-auth-action="login">Log in</button>
+                <button class="btn btn-back" type="submit" data-auth-action="register">Register</button>
+            </div>
+        </form>
+    </section>
+
+    <div id="loadingState" class="state-card mb-4">
+        <h2 class="h5 mb-2 page-title">Loading catalog</h2>
+        <p class="mb-0 page-subtitle">Requesting data from <code>/api/animals</code>.</p>
+    </div>
+
+    <div id="errorBox" class="message-box message-box-danger mb-4 d-none"></div>
+
+    <div id="emptyState" class="state-card d-none">
+        <h2 class="h4 mb-2 page-title">No cards yet</h2>
+        <p class="animal-meta mb-3">Add your first rare animal to start the catalog.</p>
+        <a class="btn btn-theme" th:href="@{/items/new}">Create first card</a>
+    </div>
+
+    <div id="animalList" class="row g-4 animal-grid"></div>
+</div>
+<script th:src="@{/js/catalog.js}"></script>
+</body>
+</html>
+
+
